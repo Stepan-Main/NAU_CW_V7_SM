@@ -13,7 +13,8 @@ public class Library {
     //<editor-fold desc="Class fields">
     private List<User> users = new ArrayList<>();;
     private List<Book> books = new ArrayList<>();
-    private Map<User, List<Book>> issuedBooks =new HashMap<>();
+//    private Map<User, List<Book>> issuedBooks = new HashMap<>();
+    private Map<String, List<Book>> issuedBooks = new HashMap<>();
     //</editor-fold>
 
 //    public Library(List<User> users, List<Book> books, Map<User, List<Book>> issuedBooks) {
@@ -24,16 +25,16 @@ public class Library {
 
     //<editor-fold desc="Library business-logic">
     // Метод видає книжку користувачу
-    public void addIssuedBook(User user, Book book) /*throws LimitExceededException*/ {
+    public void addIssuedBook(/*User user*/String userRecordNumber, Book book) /*throws LimitExceededException*/ {
         // Внутрішній массив книжок отриманих користувачем
-        List<Book> userBooks = issuedBooks.get(user);
+        List<Book> userBooks = issuedBooks.get(userRecordNumber);
 
         // Перевіряємо чи існує список книжок користувача щоб запобігти NullPointerException
         if (userBooks == null) {
             // Якщо список не існує додаємо порожній список
             userBooks = new ArrayList<>();
             // Додаємо список в карточку користувача
-            issuedBooks.put(user, userBooks);
+            issuedBooks.put(userRecordNumber, userBooks);
         }
 
         // Перевірка кількості виданих книжок для користувача
@@ -53,13 +54,15 @@ public class Library {
     // Метод повертає книжку у бібліотеку
     public void returnBook(User user, Book book) {
         // Внутнішний массив книжок отриманих користувачем
-        List<Book> userBooks = issuedBooks.get(user);
+        //List<Book> userBooks = issuedBooks.get(user);
 
         // Якщо список книжок користувача не пустий
         // Вдаляємо книжку із списку
-        if (userBooks != null && userBooks.remove(book)) {
+        if (issuedBooks != null) {
             // Якщо видалення пройшло успішно помічаємо книжку як доступну
-            book.setAvailable(true);
+            // && issuedBooks.remove(book)
+            issuedBooks.get(user.getRecordNumber()).remove(book);
+//            book.setAvailable(true);
         }
     }
     //</editor-fold>
@@ -88,6 +91,10 @@ public class Library {
 
     public List<Book> getBooks() {
         return books;
+    }
+
+    public Map<String, List<Book>> getIssuedBooks() {
+        return issuedBooks;
     }
 
     public boolean deleteBook(Book book) {

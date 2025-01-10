@@ -5,14 +5,30 @@ import MainClasses.Editions.Book;
 import MainClasses.Library;
 import MainClasses.Users.User;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class DataManipulation {
     //<editor-fold desc="Books Data Manipulation">
     public static void printBooksList(Library library) {
+        System.out.println("---------------------- Books ----------------------");
         for (Book book : library.getBooks()) {
             System.out.println(bookDataPrint(book));
         }
+        System.out.println("---------------------------------------------------");
+    }
+
+    public static void printIssuedBooksList(Library library) {
+        System.out.println("---------------------- Issued Books ----------------------");
+        for (Map.Entry<String, List<Book>> mapEntry: library.getIssuedBooks().entrySet()) {
+            StringBuilder list = new StringBuilder();
+            for (Book book : mapEntry.getValue()) {
+                list.append(list.length() > 0 ? "; " : "").append(book.getTitle());
+            }
+            System.out.println(mapEntry.getKey() + " : " + list);
+        }
+        System.out.println("----------------------------------------------------------");
     }
 
     private static String bookDataPrint(Book book) {
@@ -121,9 +137,11 @@ public class DataManipulation {
 
     //<editor-fold desc="Users Data Manipulation">
     public static void printUsersList(Library library) {
+        System.out.println("---------------------- Users ----------------------");
         for (User user : library.getUsers()) {
             System.out.println(userDataPrint(user));
         }
+        System.out.println("---------------------------------------------------");
     }
 
     private static String userDataPrint(User user) {
@@ -232,12 +250,13 @@ public class DataManipulation {
         System.out.println("Данні записані. Виходимо з програми...");
     }
 
+    //<editor-fold desc="Issue/Return">
     public static void issueBook(Scanner scanner, Library library) {
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
-        String title = scanner.next();
+        String title = scanner.nextLine();
         Book bookForIssue = null; // todo обробити щоб не null
         User userForIssue = null; // todo обробити щоб не null
-        boolean isIssued = false; // Флаг для виходу з ціклу для забобігання ConcurrentModificationException
+
         for (Book book : library.getBooks()) {
             if (book.getTitle().equals(title)) {
                 bookForIssue = book;
@@ -247,22 +266,22 @@ public class DataManipulation {
         }
 
         System.out.println("Знайдемо користувача. Для цього введіть номер залікової книжки.");
-        String record = scanner.next();
-        for (User user : library.getUsers()) {
+        String record = scanner.nextLine();
+        /*for (User user : library.getUsers()) {
             if (user.getRecordNumber().equals(record)) {
                 userForIssue = user;
                 System.out.println("Перевірте данні книжки для видачи.");
                 System.out.println(userDataPrint(user));
             }
-        }
+        }*/
 
         System.out.println("Yes - Видати книжку; No - Не видавати книжку");
-        String choice = scanner.next();
+        String choice = scanner.nextLine();
         switch (choice) {
             case "Yes":
                 System.out.println("Книжка видана.");
-                library.addIssuedBook(userForIssue, bookForIssue);
-                isIssued = true;
+                // todo Json не четается
+                library.addIssuedBook(record, bookForIssue);
                 break;
             case "No":
                 System.out.println("Книжка не видана");
@@ -274,6 +293,46 @@ public class DataManipulation {
     }
 
     public static void receiptBook(Scanner scanner, Library library) {
-        // todo
+        Book bookForReturn = null; // todo обробити щоб не null
+        User userForReturn = null; // todo обробити щоб не null
+
+        System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
+        scanner.nextLine();
+        String title = scanner.nextLine();
+        for (Book book : library.getBooks()) {
+            if (book.getTitle().equals(title)) {
+                bookForReturn = book;
+                System.out.println("Перевірте данні книжки для видачи.");
+                System.out.println(bookDataPrint(book));
+            }
+        }
+
+        System.out.println("Знайдемо користувача. Для цього введіть номер залікової книжки.");
+        String record = scanner.next();
+        for (User user : library.getUsers()) {
+            if (user.getRecordNumber().equals(record)) {
+                userForReturn = user;
+                System.out.println("Перевірте данні книжки для видачи.");
+                System.out.println(userDataPrint(user));
+            }
+        }
+
+        System.out.println("Yes - Прийняти книжку; No - Не прийняти книжку");
+        String choice = scanner.next();
+        switch (choice) {
+            case "Yes":
+                System.out.println("Книжка здана в бібліотеку.");
+                library.returnBook(userForReturn, bookForReturn);
+                break;
+            case "No":
+                System.out.println("Книжка не прийнята");
+                break;
+            default:
+                System.out.println("Помилка! Повторіть введення...");
+                break;
+        }
     }
+
+
+    //</editor-fold>
 }

@@ -1,10 +1,11 @@
 import CustomExceptions.NoLibFileException;
 import MainClasses.Library;
+import Utils.DataManipulation;
 import Utils.FileManager;
 
 import java.util.Scanner;
 
-import static Utils.DataManipulation.printUsersList;
+import static Utils.DataManipulation.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,6 +16,7 @@ public class Main {
             library = FileManager.loadFromFile("lib_data.json", Library.class);
             System.out.println("Дані бібліотеки успішно завантажено!");
         } catch (Exception e) {
+            System.out.println(e);
             new NoLibFileException("Файл даних бібліотеки не знайдено!");
             library = new Library();
             System.out.println("Створено нову бібліотеку.");
@@ -24,6 +26,8 @@ public class Main {
         }
 
         printUsersList(library);
+        printBooksList(library);
+        printIssuedBooksList(library);
 
         // Створюємо сканер для читання данниз з консолі
         Scanner scanner = new Scanner(System.in);
@@ -33,4 +37,5 @@ public class Main {
             if (Menu.mainMenu(scanner, library)) return;
         }
     }
+
 }

@@ -12,9 +12,11 @@ public class Menu {
             case 1: // Видача/прийом книжок;
                 System.out.println("1 - Видача книжок; 2 - Прийом книжок; 3 - Вийти");
                 if (issueReceiptBooks(scanner, library)) return true;
+                break;
             case 2: // 2 - Керування данними;
                 System.out.println("1 - Книжки; 2 - Користувачі; 3 - Вийти");
                 if (dataManagement(scanner, library)) return true;
+                break;
             case 3: // Вийти
                 DataManipulation.SaveDataToFile(library);
                 return true;
@@ -95,8 +97,10 @@ public class Menu {
         switch (issueReceptionBooksChoice) {
             case 1: // Видача книжок
                 DataManipulation.issueBook(scanner, library);
+                break;
             case 2: // Прийом книжок
                 DataManipulation.receiptBook(scanner, library);
+                break;
             case 3: // Вийти
                 DataManipulation.SaveDataToFile(library);
                 return true;

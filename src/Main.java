@@ -25,9 +25,9 @@ public class Main {
 
         }
 
-        printUsersList(library);
+        /*printUsersList(library);
         printBooksList(library);
-        printIssuedBooksList(library);
+        printIssuedBooksList(library);*/
 
         // Створюємо сканер для читання данниз з консолі
         Scanner scanner = new Scanner(System.in);

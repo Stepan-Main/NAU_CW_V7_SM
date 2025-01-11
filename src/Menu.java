@@ -18,7 +18,8 @@ public class Menu {
                 if (dataManagement(scanner, library)) return true;
                 break;
             case 3: // Звідність
-                //DataManipulation.(library);
+                System.out.println("1 - Список книжок; 2 - Список користувачів; 3 - Книжки у користувачів; 4 - Вийти");
+                if (reporting(scanner, library)) return true;
                 return true;
             case 4: // Вийти
                 DataManipulation.SaveDataToFile(library);
@@ -105,6 +106,29 @@ public class Menu {
                 DataManipulation.receiptBook(scanner, library);
                 break;
             case 3: // Вийти
+                DataManipulation.SaveDataToFile(library);
+                return true;
+            default:
+                System.out.println("Помилка! Повторіть введення...");
+                break;
+        }
+        return false;
+    }
+
+    // Звідність
+    public static boolean reporting(Scanner scanner, Library library) {
+        int reportingChoice = scanner.nextInt();
+        switch (reportingChoice) {
+            case 1: // Надрукувати список книжок
+                DataManipulation.printBooksList(library);
+                break;
+            case 2: // Надрукування список користувачів
+                DataManipulation.printUsersList(library);
+                break;
+            case 3: // Надрукувати список користувачів із списками виданних книжок
+                DataManipulation.printIssuedBooksList(library);
+                break;
+            case 4: // Вийти
                 DataManipulation.SaveDataToFile(library);
                 return true;
             default:

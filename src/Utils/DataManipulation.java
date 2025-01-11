@@ -252,11 +252,12 @@ public class DataManipulation {
 
     //<editor-fold desc="Issue/Return">
     public static void issueBook(Scanner scanner, Library library) {
-        System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
-        String title = scanner.nextLine();
         Book bookForIssue = null; // todo обробити щоб не null
-        User userForIssue = null; // todo обробити щоб не null
+        //User userForIssue = null; // todo обробити щоб не null
 
+        System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
+        scanner.nextLine();
+        String title = scanner.nextLine();
         for (Book book : library.getBooks()) {
             if (book.getTitle().equals(title)) {
                 bookForIssue = book;
@@ -267,13 +268,13 @@ public class DataManipulation {
 
         System.out.println("Знайдемо користувача. Для цього введіть номер залікової книжки.");
         String record = scanner.nextLine();
-        /*for (User user : library.getUsers()) {
+        for (User user : library.getUsers()) {
             if (user.getRecordNumber().equals(record)) {
-                userForIssue = user;
+                //userForIssue = user;
                 System.out.println("Перевірте данні книжки для видачи.");
                 System.out.println(userDataPrint(user));
             }
-        }*/
+        }
 
         System.out.println("Yes - Видати книжку; No - Не видавати книжку");
         String choice = scanner.nextLine();
@@ -321,8 +322,8 @@ public class DataManipulation {
         String choice = scanner.next();
         switch (choice) {
             case "Yes":
-                System.out.println("Книжка здана в бібліотеку.");
                 library.returnBook(userForReturn, bookForReturn);
+                System.out.println("Книжка здана в бібліотеку.");
                 break;
             case "No":
                 System.out.println("Книжка не прийнята");

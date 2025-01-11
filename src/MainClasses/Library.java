@@ -61,8 +61,14 @@ public class Library {
         if (issuedBooks != null) {
             // Якщо видалення пройшло успішно помічаємо книжку як доступну
             // && issuedBooks.remove(book)
-            issuedBooks.get(user.getRecordNumber()).remove(book);
-//            book.setAvailable(true);
+            List<Book> booksOnHand = issuedBooks.get(user.getRecordNumber());
+            for (int i = 0; i < booksOnHand.size(); i++) {
+                if (book.getId() == booksOnHand.get(i).getId()) {
+                    booksOnHand.remove(i);
+                    break;
+                }
+            }
+            book.setAvailable(true);
         }
     }
     //</editor-fold>

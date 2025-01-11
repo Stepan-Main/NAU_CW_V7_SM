@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Menu {
     public static boolean mainMenu(Scanner scanner, Library library) {
-        System.out.println("1 - Видача/прийом книжок; 2 - Керування данними; 3 - Вийти");
+        System.out.println("1 - Видача/прийом книжок; 2 - Керування данними; 3 - Звідність; 4 - Вийти");
         int mainMenuChoice = scanner.nextInt();
         switch (mainMenuChoice) {
             case 1: // Видача/прийом книжок;
@@ -17,7 +17,10 @@ public class Menu {
                 System.out.println("1 - Книжки; 2 - Користувачі; 3 - Вийти");
                 if (dataManagement(scanner, library)) return true;
                 break;
-            case 3: // Вийти
+            case 3: // Звідність
+                //DataManipulation.(library);
+                return true;
+            case 4: // Вийти
                 DataManipulation.SaveDataToFile(library);
                 return true;
             default:

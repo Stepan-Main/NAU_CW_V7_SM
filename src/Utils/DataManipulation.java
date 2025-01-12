@@ -10,6 +10,12 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class DataManipulation {
+
+    public static final String menuColor = "\u001B[3;30;44m";
+    public static final String niceColor = "\u001B[3;30;42m";
+    public static final String errorColor = "\u001B[3;30;47m";
+    public static final String reset = "\u001B[0m";
+
     //<editor-fold desc="Books Data Manipulation">
     public static void printBooksList(Library library) {
         System.out.println("---------------------- Books ----------------------");
@@ -65,8 +71,8 @@ public class DataManipulation {
         for (Book book : library.getBooks()) {
             if (book.getTitle().equals(title)) {
                 System.out.println(bookDataPrint(book)); // Виводимо збережені дані книжки
-                System.out.println("Які данні ви бажайте відрагувати?\n" +
-                        "1 - ID; 2 - Назва; 3 - Автори; 4 - Видаництво; 5 - Кількість сторінок; 6 - Наявність; 7 - Вийти");
+                System.out.println("Які данні ви бажайте відрагувати?\n" + menuColor +
+                        " 1 - ID; 2 - Назва; 3 - Автори; 4 - Видаництво; 5 - Кількість сторінок; 6 - Наявність; 7 - Вийти " + reset);
                 int userFieldChoice = scanner.nextInt();
                 switch (userFieldChoice) {
                     case 1: // ID
@@ -114,7 +120,7 @@ public class DataManipulation {
             if (book.getTitle().equals(title)) {
                 System.out.println("Перевірте данні книжки для видалення.");
                 System.out.println(bookDataPrint(book));
-                System.out.println("Yes - Видалити книжку; No - Не видаляти книжку");
+                System.out.println(menuColor+" Yes - Видалити книжку; No - Не видаляти книжку "+reset);
                 String choice = scanner.next();
                 switch (choice) {
                     case "Yes":
@@ -178,8 +184,8 @@ public class DataManipulation {
         for (User user:library.getUsers()) {
             if (user.getRecordNumber().equals(recordNumber)) {
                 System.out.println(userDataPrint(user)); // Виводимо збережені дані користувача
-                System.out.println("Які данні ви бажайте відрагувати?\n" +
-                        "1 - Імя; 2 - Прізвища; 3 - Побатькові; 4 - Номер групи; 5 - Email; 6 - Вийти");
+                System.out.println("Які данні ви бажайте відрагувати?\n" + menuColor +
+                        " 1 - Імя; 2 - Прізвища; 3 - Побатькові; 4 - Номер групи; 5 - Email; 6 - Вийти " + reset);
                 int userFieldChoice = scanner.nextInt();
                 switch (userFieldChoice) {
                     case 1: // Імя
@@ -223,7 +229,7 @@ public class DataManipulation {
             if (user.getRecordNumber().equals(recordNumber)) {
                 System.out.println("Перевірте данні користувача для видалення.");
                 System.out.println(userDataPrint(user));
-                System.out.println("Yes - Видалити користувача; No - Не видаляти користувача");
+                System.out.println(menuColor + " Yes - Видалити користувача; No - Не видаляти користувача " + reset);
                 String choice = scanner.next();
                 switch (choice) {
                     case "Yes":
@@ -247,7 +253,7 @@ public class DataManipulation {
     // Метод що викликае метод запису данних у файл та виводи сповіщення
     public static void SaveDataToFile(Library library) {
         FileManager.saveFile("lib_data.json", library);
-        System.out.println("Данні записані. Виходимо з програми...");
+        System.out.println(niceColor + " Данні записані. Виходимо з програми... " + reset);
     }
 
     //<editor-fold desc="Issue/Return">
@@ -276,7 +282,7 @@ public class DataManipulation {
             }
         }
 
-        System.out.println("Yes - Видати книжку; No - Не видавати книжку");
+        System.out.println(menuColor + " Yes - Видати книжку; No - Не видавати книжку " + reset);
         String choice = scanner.nextLine();
         switch (choice) {
             case "Yes":
@@ -288,7 +294,7 @@ public class DataManipulation {
                 System.out.println("Книжка не видана");
                 break;
             default:
-                System.out.println("Помилка! Повторіть введення...");
+                System.out.println(errorColor+" Помилка! Повторіть введення... "+reset);
                 break;
         }
     }
@@ -318,7 +324,7 @@ public class DataManipulation {
             }
         }
 
-        System.out.println("Yes - Прийняти книжку; No - Не прийняти книжку");
+        System.out.println(menuColor+" Yes - Прийняти книжку; No - Не прийняти книжку "+reset);
         String choice = scanner.next();
         switch (choice) {
             case "Yes":
@@ -329,7 +335,7 @@ public class DataManipulation {
                 System.out.println("Книжка не прийнята");
                 break;
             default:
-                System.out.println("Помилка! Повторіть введення...");
+                System.out.println(errorColor+" Помилка! Повторіть введення... "+reset);
                 break;
         }
     }

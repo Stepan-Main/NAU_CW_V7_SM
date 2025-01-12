@@ -5,27 +5,31 @@ import Utils.DataManipulation;
 import java.util.Scanner;
 
 public class Menu {
+    public static final String menuColor = "\u001B[3;30;44m";
+    public static final String errorColor = "\u001B[3;30;47m";
+    public static final String reset = "\u001B[0m";
+
     public static boolean mainMenu(Scanner scanner, Library library) {
-        System.out.println("1 - Видача/прийом книжок; 2 - Керування данними; 3 - Звідність; 4 - Вийти");
+        System.out.println(menuColor + " 1 - Видача/прийом книжок; 2 - Керування данними; 3 - Звідність; 4 - Вийти " + reset);
         int mainMenuChoice = scanner.nextInt();
         switch (mainMenuChoice) {
             case 1: // Видача/прийом книжок;
-                System.out.println("1 - Видача книжок; 2 - Прийом книжок; 3 - Вийти");
+                System.out.println(menuColor + " 1 - Видача книжок; 2 - Прийом книжок; 3 - Вийти " + reset);
                 if (issueReceiptBooks(scanner, library)) return true;
                 break;
             case 2: // 2 - Керування данними;
-                System.out.println("1 - Книжки; 2 - Користувачі; 3 - Вийти");
+                System.out.println(menuColor + " 1 - Книжки; 2 - Користувачі; 3 - Вийти " + reset);
                 if (dataManagement(scanner, library)) return true;
                 break;
             case 3: // Звідність
-                System.out.println("1 - Список книжок; 2 - Список користувачів; 3 - Книжки у користувачів; 4 - Вийти");
+                System.out.println(menuColor + " 1 - Список книжок; 2 - Список користувачів; 3 - Книжки у користувачів; 4 - Вийти " + reset);
                 if (reporting(scanner, library)) return true;
                 return true;
             case 4: // Вийти
                 DataManipulation.SaveDataToFile(library);
                 return true;
             default:
-                System.out.println("Помилка! Повторіть введення...");
+                System.out.println(errorColor + "Помилка! Повторіть введення..." + reset);
                 break;
         }
         return false;
@@ -35,18 +39,18 @@ public class Menu {
         int dataManagementMenuChoice = scanner.nextInt();
         switch (dataManagementMenuChoice) {
             case 1: // Книжки
-                System.out.println("1 - Додати книжку; 2 - Редагувати данні книжки; 3 - Видалити книжку; 4 - Вийти");
+                System.out.println(menuColor + " 1 - Додати книжку; 2 - Редагувати данні книжки; 3 - Видалити книжку; 4 - Вийти " + reset);
                 if (bookManagement(scanner, library)) return true;
                 break;
             case 2: // Користувачі
-                System.out.println("1 - Додати користувача; 2 - Редагувати данні користувача; 3 - Видалити користувача; 4 - Вийти");
+                System.out.println(menuColor + " 1 - Додати користувача; 2 - Редагувати данні користувача; 3 - Видалити користувача; 4 - Вийти " + reset);
                 if (userManagement(scanner, library)) return true;
                 break;
             case 3: // Вийти
                 DataManipulation.SaveDataToFile(library);
                 return true;
             default:
-                System.out.println("Помилка! Повторіть введення...");
+                System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
                 break;
         }
         return false;
@@ -68,7 +72,7 @@ public class Menu {
                 DataManipulation.SaveDataToFile(library);
                 return true;
             default:
-                System.out.println("Помилка! Повторіть введення...");
+                System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
                 break;
         }
         return false;
@@ -90,7 +94,7 @@ public class Menu {
                 DataManipulation.SaveDataToFile(library);
                 return true;
             default:
-                System.out.println("Помилка! Повторіть введення...");
+                System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
                 break;
         }
         return false;
@@ -109,7 +113,7 @@ public class Menu {
                 DataManipulation.SaveDataToFile(library);
                 return true;
             default:
-                System.out.println("Помилка! Повторіть введення...");
+                System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
                 break;
         }
         return false;
@@ -132,7 +136,7 @@ public class Menu {
                 DataManipulation.SaveDataToFile(library);
                 return true;
             default:
-                System.out.println("Помилка! Повторіть введення...");
+                System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
                 break;
         }
         return false;

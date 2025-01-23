@@ -5,6 +5,7 @@ import MainClasses.Editions.Book;
 import MainClasses.Library;
 import MainClasses.Users.User;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -18,15 +19,15 @@ public class DataManipulation {
 
     //<editor-fold desc="Books Data Manipulation">
     public static void printBooksList(Library library) {
-        System.out.println("---------------------- Books ----------------------");
+        System.out.println("---------------------- Книжки ----------------------");
         for (Book book : library.getBooks()) {
             System.out.println(bookDataPrint(book));
         }
-        System.out.println("---------------------------------------------------");
+        System.out.println("----------------------------------------------------");
     }
 
     public static void printIssuedBooksList(Library library) {
-        System.out.println("---------------------- Issued Books ----------------------");
+        System.out.println("---------------------- Виданні книжки ----------------------");
         for (Map.Entry<String, List<Book>> mapEntry: library.getIssuedBooks().entrySet()) {
             StringBuilder list = new StringBuilder();
             for (Book book : mapEntry.getValue()) {
@@ -34,7 +35,7 @@ public class DataManipulation {
             }
             System.out.println(mapEntry.getKey() + " : " + list);
         }
-        System.out.println("----------------------------------------------------------");
+        System.out.println("------------------------------------------------------------");
     }
 
     private static String bookDataPrint(Book book) {
@@ -143,11 +144,11 @@ public class DataManipulation {
 
     //<editor-fold desc="Users Data Manipulation">
     public static void printUsersList(Library library) {
-        System.out.println("---------------------- Users ----------------------");
+        System.out.println("---------------------- Користувачі ----------------------");
         for (User user : library.getUsers()) {
             System.out.println(userDataPrint(user));
         }
-        System.out.println("---------------------------------------------------");
+        System.out.println("---------------------------------------------------------");
     }
 
     private static String userDataPrint(User user) {
@@ -162,17 +163,17 @@ public class DataManipulation {
     public static void addNewUser(Scanner scanner, Library library) {
         System.out.println("Ввести данні користувача: ");
         System.out.print(" - номер залікової книжки: ");
-        String recordNumber = scanner.next();
+        String recordNumber = DataCheck.recordNumberCheck(scanner);
         System.out.print(" - імя: ");
-        String firstName = scanner.next();
+        String firstName = DataCheck.nameCheck(scanner);
         System.out.print(" - прізвище: ");
-        String lastName = scanner.next();
+        String lastName = DataCheck.nameCheck(scanner);
         System.out.print(" - побатькові: ");
-        String surname = scanner.next();
+        String surname = DataCheck.nameCheck(scanner);
         System.out.print(" - група: ");
-        String group = scanner.next();
+        String group = DataCheck.groupCheck(scanner);
         System.out.print(" - електронна пошта: ");
-        String email = scanner.next();
+        String email = DataCheck.emailCheck(scanner);
         User user = new User(recordNumber, firstName, lastName, surname, group, email);
         library.addUser(user);
         System.out.println("Користувач " + userDataPrint(user) + " доданий в картотеку.");
@@ -180,7 +181,7 @@ public class DataManipulation {
 
     public static void editUserData(Scanner scanner, Library library) {
         System.out.println("Знайдемо користувача. Для цього введіть номер заликової книжки.");
-        String recordNumber = scanner.next();
+        String recordNumber = DataCheck.recordNumberCheck(scanner);
         for (User user:library.getUsers()) {
             if (user.getRecordNumber().equals(recordNumber)) {
                 System.out.println(userDataPrint(user)); // Виводимо збережені дані користувача
@@ -190,23 +191,23 @@ public class DataManipulation {
                 switch (userFieldChoice) {
                     case 1: // Імя
                         System.out.println("Ведіть нове імя");
-                        user.setFirstName(scanner.next());
+                        user.setFirstName(DataCheck.nameCheck(scanner));
                         break;
                     case 2: // Прізвища
                         System.out.println("Ведіть нове прізвище");
-                        user.setLastName(scanner.next());
+                        user.setLastName(DataCheck.nameCheck(scanner));
                         break;
                     case 3: // Побатькові
                         System.out.println("Ведіть нове побатькові");
-                        user.setSurname(scanner.next());
+                        user.setSurname(DataCheck.nameCheck(scanner));
                         break;
                     case 4: // Номер групи
                         System.out.println("Ведіть новий номер групи");
-                        user.setGroup(scanner.next());
+                        user.setGroup(DataCheck.groupCheck(scanner));
                         break;
                     case 5: // Email
                         System.out.println("Ведіть новий email");
-                        user.setEmail(scanner.next());
+                        user.setEmail(DataCheck.emailCheck(scanner));
                         break;
                     case 6: // Вийти
                         DataManipulation.SaveDataToFile(library);
@@ -223,7 +224,7 @@ public class DataManipulation {
 
     public static void deleteUser(Scanner scanner, Library library) {
         System.out.println("Знайдемо користувача. Для цього введіть номер заликової книжки.");
-        String recordNumber = scanner.next();
+        String recordNumber = DataCheck.recordNumberCheck(scanner);
         boolean isDeleted = false; // Флаг для виходу з ціклу для забобігання ConcurrentModificationException
         for (User user : library.getUsers()) {
             if (user.getRecordNumber().equals(recordNumber)) {

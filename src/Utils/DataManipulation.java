@@ -50,17 +50,19 @@ public class DataManipulation {
     public static void addNewBook(Scanner scanner, Library library) {
         System.out.println("Ввсести данні книжки:");
         System.out.print(" - ID книжки: ");
-        int id = scanner.nextInt();
+        int id = DataCheck.bookIDCheck(scanner);
         System.out.print(" - Назва книжки: ");
+        // Перевіряти коретність введення назви книжки немає сенcу
         String title = scanner.next();
         System.out.print(" - Автори книжки: ");
-        String author = scanner.next();
+        String author = DataCheck.authorNameCheck(scanner);
         System.out.print(" - Видаництво книжки: ");
+        // Перевіряти коретність введення назви книжки немає сенcу
         String publisher = scanner.next();
         System.out.print(" - Кількість сторінок: ");
-        int pages = scanner.nextInt();
+        int pages = DataCheck.pagesCheck(scanner);
         System.out.print(" - Наявність книжки: ");
-        boolean available = scanner.nextBoolean();
+        boolean available = DataCheck.availableCheck(scanner);
         Book book = new Book(id, title, author, publisher, pages, true);
         library.addBook(book);
         System.out.println("Книжка " + bookDataPrint(book) + " додана в бібліотеку.");
@@ -68,9 +70,10 @@ public class DataManipulation {
 
     public static void editBookData(Scanner scanner, Library library) {
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
+        // Перевіряти коретність введення назви книжки немає сенcу
         String title = scanner.next();
         for (Book book : library.getBooks()) {
-            if (book.getTitle().equals(title)) {
+            if (book.getTitle().equals(title)) { // todo Зробити пошук по частині назви
                 System.out.println(bookDataPrint(book)); // Виводимо збережені дані книжки
                 System.out.println("Які данні ви бажайте відрагувати?\n" + menuColor +
                         " 1 - ID; 2 - Назва; 3 - Автори; 4 - Видаництво; 5 - Кількість сторінок; 6 - Наявність; 7 - Вийти " + reset);
@@ -78,27 +81,29 @@ public class DataManipulation {
                 switch (userFieldChoice) {
                     case 1: // ID
                         System.out.println("Ведіть нове ID");
-                        book.setId(scanner.nextInt());
+                        book.setId(DataCheck.bookIDCheck(scanner));
                         break;
                     case 2: // Назва
                         System.out.println("Ведіть нову назву");
+                        // Перевіряти коретність введення назви книжки немає сенcу
                         book.setTitle(scanner.next());
                         break;
                     case 3: // Автори
                         System.out.println("Ведіть нових авторів");
-                        book.setAuthor(scanner.next());
+                        book.setAuthor(DataCheck.authorNameCheck(scanner));
                         break;
                     case 4: // Видаництво
                         System.out.println("Ведіть нове видаництво");
+                        // Перевіряти коретність введення назви книжки немає сенcу
                         book.setPublisher(scanner.next());
                         break;
                     case 5: // Кількість сторінок
                         System.out.println("Ведіть кількість сторінок");
-                        book.setPages(scanner.nextInt());
+                        book.setPages(DataCheck.pagesCheck(scanner));
                         break;
                     case 6: // Наявність
-                        System.out.println("Пачте наявність (true/false)");
-                        book.setAvailable(scanner.nextBoolean());
+                        System.out.println("Ведіть наявність (true/false)");
+                        book.setAvailable(DataCheck.availableCheck(scanner));
                         break;
                     case 7: // Вийти
                         DataManipulation.SaveDataToFile(library);
@@ -115,10 +120,11 @@ public class DataManipulation {
 
     public static void deleteBook(Scanner scanner, Library library) {
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
+        // Перевіряти коретність введення назви книжки немає сенcу
         String title = scanner.next();
         boolean isDeleted = false; // Флаг для виходу з ціклу для забобігання ConcurrentModificationException
         for (Book book : library.getBooks()) {
-            if (book.getTitle().equals(title)) {
+            if (book.getTitle().equals(title)) { // todo Зробити пошук по частині назви
                 System.out.println("Перевірте данні книжки для видалення.");
                 System.out.println(bookDataPrint(book));
                 System.out.println(menuColor+" Yes - Видалити книжку; No - Не видаляти книжку "+reset);
@@ -263,10 +269,11 @@ public class DataManipulation {
         //User userForIssue = null; // todo обробити щоб не null
 
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
+        // Перевіряти коретність введення назви книжки немає сенцу
         scanner.nextLine();
         String title = scanner.nextLine();
         for (Book book : library.getBooks()) {
-            if (book.getTitle().equals(title)) {
+            if (book.getTitle().equals(title)) {// todo Шукати по частині назви
                 bookForIssue = book;
                 System.out.println("Перевірте данні книжки для видачи.");
                 System.out.println(bookDataPrint(book));
@@ -274,7 +281,7 @@ public class DataManipulation {
         }
 
         System.out.println("Знайдемо користувача. Для цього введіть номер залікової книжки.");
-        String record = scanner.nextLine();
+        String record = DataCheck.recordNumberCheck(scanner);
         for (User user : library.getUsers()) {
             if (user.getRecordNumber().equals(record)) {
                 //userForIssue = user;
@@ -288,7 +295,7 @@ public class DataManipulation {
         switch (choice) {
             case "Yes":
                 System.out.println("Книжка видана.");
-                // todo Json не четается
+                // todo Json не читаєтся
                 library.addIssuedBook(record, bookForIssue);
                 break;
             case "No":
@@ -305,6 +312,7 @@ public class DataManipulation {
         User userForReturn = null; // todo обробити щоб не null
 
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
+        // Перевіряти коретність введення назви книжки немає сенцу
         scanner.nextLine();
         String title = scanner.nextLine();
         for (Book book : library.getBooks()) {
@@ -316,7 +324,7 @@ public class DataManipulation {
         }
 
         System.out.println("Знайдемо користувача. Для цього введіть номер залікової книжки.");
-        String record = scanner.next();
+        String record = DataCheck.recordNumberCheck(scanner);
         for (User user : library.getUsers()) {
             if (user.getRecordNumber().equals(record)) {
                 userForReturn = user;

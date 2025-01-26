@@ -20,7 +20,7 @@ public class DataCheck {
     }
 
     public static String nameCheck(Scanner scanner){
-        while (!(strData = scanner.next()).matches("^[А-ЯЁ][а-яё]*$")) {
+        while (!(strData = scanner.next()).matches("^[А-ЯЇЄІЇҐЁ][а-яїєіїґ'ё]*$")) {
             System.out.println(error("\nІм'я/призвище/побаткові складється із букв кирилиці і починається з великої літири," +
                     "\nне може включати пробіли, цифри та символи."));
         }
@@ -51,7 +51,7 @@ public class DataCheck {
 
 
     public static String authorNameCheck(Scanner scanner){ // todo Не працює. Можливо через української літери
-        while (!(strData = scanner.nextLine()).matches("^[A-ZА-ЯЁ][a-zа-яё]+(?:[- ][A-ZА-ЯЁ][a-zа-яё]+)*(?:,? [A-ZА-ЯЁ]\\.? [A-ZА-ЯЁ]\\.?)?$")) {
+        while (!(strData = scanner.nextLine()).matches("^[A-ZА-ЯЇЄІЇҐЁ][a-zа-яїєіїґ'ё]+(?:[- ][A-ZА-ЯЇЄІЇҐЁ][a-zа-яїєіїґ'ё]+)*(?:,? [A-ZА-ЯЇЄІЇҐЁ]\\.? [A-ZА-ЯЇЄІЇҐЁ]\\.?)?$")) {
             System.out.println(error("\nІмена авторів повинні будти веденні у форматі \"Анна-Мария В. К.\". " +
                     "допускается як киритилиця так и латилиця" +
                     "Не допускаються цифри та інші знаки"));

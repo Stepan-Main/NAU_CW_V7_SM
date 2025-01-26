@@ -24,7 +24,7 @@ public class Menu {
             case 3: // Звідність
                 System.out.println(menuColor + " 1 - Список книжок; 2 - Список користувачів; 3 - Книжки у користувачів; 4 - Вийти " + reset);
                 if (reporting(scanner, library)) return true;
-                return true;
+                break;
             case 4: // Вийти
                 DataManipulation.SaveDataToFile(library);
                 return true;
@@ -36,14 +36,15 @@ public class Menu {
     }
 
     public static boolean dataManagement(Scanner scanner, Library library) {
+        String dataManagmentMenu = " 1 - Додати; 2 - Редагувати; 3 - Видалити; 4 - Переглянути; 5 - Список; 6 - Вийти ";
         int dataManagementMenuChoice = scanner.nextInt();
         switch (dataManagementMenuChoice) {
             case 1: // Книжки
-                System.out.println(menuColor + " 1 - Додати книжку; 2 - Редагувати данні книжки; 3 - Видалити книжку; 4 - Вийти " + reset);
+                System.out.println(menuColor + " [ Документи ] " + dataManagmentMenu + reset);
                 if (bookManagement(scanner, library)) return true;
                 break;
             case 2: // Користувачі
-                System.out.println(menuColor + " 1 - Додати користувача; 2 - Редагувати данні користувача; 3 - Видалити користувача; 4 - Вийти " + reset);
+                System.out.println(menuColor + " [ Користувачі ] " + dataManagmentMenu + reset);
                 if (userManagement(scanner, library)) return true;
                 break;
             case 3: // Вийти
@@ -68,7 +69,15 @@ public class Menu {
             case 3: // Видалити користувача
                 DataManipulation.deleteUser(scanner, library);
                 break;
-            case 4: // Вийти
+
+            case 4: // Переглянути дані користувача
+                DataManipulation.viewDataUser(scanner, library); // todo add method
+                break;
+            case 5: // Список користувачів
+                DataManipulation.listUsers(scanner, library); // todo add method
+                break;
+
+            case 6: // Вийти
                 DataManipulation.SaveDataToFile(library);
                 return true;
             default:
@@ -90,7 +99,15 @@ public class Menu {
             case 3: // Видалити книжку
                 DataManipulation.deleteBook(scanner, library);
                 break;
-            case 4: // Вийти
+
+            case 4: // Переглянути дані книжки
+                DataManipulation.viewDataBook(scanner, library); // todo add method
+                break;
+            case 5: // Список книжок
+                DataManipulation.listBooks(scanner, library); // todo add method
+                break;
+
+            case 6: // Вийти
                 DataManipulation.SaveDataToFile(library);
                 return true;
             default:

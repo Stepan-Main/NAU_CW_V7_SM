@@ -25,7 +25,7 @@ public class Library {
 
     //<editor-fold desc="Library business-logic">
     // Метод видає книжку користувачу
-    public void addIssuedBook(/*User user*/String userRecordNumber, Book book) /*throws LimitExceededException*/ {
+    public void addIssuedBook(/*User user*/String userRecordNumber, Book book) throws LimitExceededException {
         // Внутрішній массив книжок отриманих користувачем
         List<Book> userBooks = issuedBooks.get(userRecordNumber);
 
@@ -40,7 +40,7 @@ public class Library {
         // Перевірка кількості виданих книжок для користувача
         // Викинемо виняток LimitExceededException якщо користувач уже узяв більше ніж 5 книжок.
         if (userBooks.size() >= 5) {
-//            throw new LimitExceededException("Кристувач не може отрмати більш ниж 5 книжок.");
+            throw new LimitExceededException("Кристувач не може отрмати більш ниж 5 книжок.");
         }
 
         // Додавання книжки до списку користувача

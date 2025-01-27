@@ -378,7 +378,7 @@ public class DataManipulation {
     // Метод що викликае метод запису данних у файл та виводи сповіщення
     public static void SaveDataToFile(Library library) {
         FileManager.saveFile("lib_data.json", library);
-        System.out.println(niceColor + " Данні записані. Виходимо з програми... " + reset);
+        System.out.println(niceColor + " Данні записані." + reset);
     }
 
     //<editor-fold desc="Issue/Return">
@@ -386,48 +386,71 @@ public class DataManipulation {
         Book bookForIssue = null; // todo обробити щоб не null
         //User userForIssue = null; // todo обробити щоб не null
 
+        System.out.println("Знайдемо користувача. Для цього введіть номер залікової книжки.");
+        String record = DataCheck.recordNumberCheck(scanner);
+        for (User user : library.getUsers()) {
+            if (user.getRecordNumber().equals(record)) {
+                System.out.println("Перевірте данні користувача для видачи.");
+                System.out.println(userDataPrint(user));
+                break;
+            }
+        }
+
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
         // Перевіряти коретність введення назви книжки немає сенцу
         scanner.nextLine();
         String title = scanner.nextLine();
         for (Book book : library.getBooks()) {
             if (book.getTitle().equals(title)) {// todo Шукати по частині назви
+                if (!book.isAvailable()) {
+                    System.out.println("Книжки зараз немає у бібліотеці.");
+                    break;
+                }
                 bookForIssue = book;
                 System.out.println("Перевірте данні книжки для видачи.");
                 System.out.println(bookDataPrint(book));
+                break;
             }
         }
 
-        System.out.println("Знайдемо користувача. Для цього введіть номер залікової книжки.");
-        String record = DataCheck.recordNumberCheck(scanner);
-        for (User user : library.getUsers()) {
-            if (user.getRecordNumber().equals(record)) {
-                //userForIssue = user;
-                System.out.println("Перевірте данні книжки для видачи.");
-                System.out.println(userDataPrint(user));
+        // Коли книга є у бібліотеці
+        if (bookForIssue.isAvailable()) {
+            System.out.println(menuColor + " Yes - Видати книжку; No - Не видавати книжку " + reset);
+            String choice = scanner.nextLine();
+            switch (choice) {
+                case "Yes":
+                    try {
+                        library.addIssuedBook(record, bookForIssue);
+                        System.out.println("Книжка видана.");
+                        SaveDataToFile(library);
+                    } catch (LimitExceededException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case "No":
+                    System.out.println("Книжка не видана");
+                    break;
+                default:
+                    System.out.println(errorColor+" Помилка! Повторіть введення... "+reset);
+                    break;
             }
-        }
-
-        System.out.println(menuColor + " Yes - Видати книжку; No - Не видавати книжку " + reset);
-        String choice = scanner.nextLine();
-        switch (choice) {
-            case "Yes":
-                System.out.println("Книжка видана.");
-                // todo Json не читаєтся
-                library.addIssuedBook(record, bookForIssue);
-                break;
-            case "No":
-                System.out.println("Книжка не видана");
-                break;
-            default:
-                System.out.println(errorColor+" Помилка! Повторіть введення... "+reset);
-                break;
         }
     }
 
     public static void receiptBook(Scanner scanner, Library library) {
         Book bookForReturn = null; // todo обробити щоб не null
         User userForReturn = null; // todo обробити щоб не null
+
+        System.out.println("Знайдемо користувача. Для цього введіть номер залікової книжки.");
+        String record = DataCheck.recordNumberCheck(scanner);
+        for (User user : library.getUsers()) {
+            if (user.getRecordNumber().equals(record)) {
+                userForReturn = user;
+                System.out.println("Перевірте данні книжки для видачи.");
+                System.out.println(userDataPrint(user));
+                break;
+            }
+        }
 
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
         // Перевіряти коретність введення назви книжки немає сенцу
@@ -438,16 +461,7 @@ public class DataManipulation {
                 bookForReturn = book;
                 System.out.println("Перевірте данні книжки для видачи.");
                 System.out.println(bookDataPrint(book));
-            }
-        }
-
-        System.out.println("Знайдемо користувача. Для цього введіть номер залікової книжки.");
-        String record = DataCheck.recordNumberCheck(scanner);
-        for (User user : library.getUsers()) {
-            if (user.getRecordNumber().equals(record)) {
-                userForReturn = user;
-                System.out.println("Перевірте данні книжки для видачи.");
-                System.out.println(userDataPrint(user));
+                break;
             }
         }
 

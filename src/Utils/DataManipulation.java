@@ -198,6 +198,8 @@ public class DataManipulation {
         System.out.println(niceColor + "----------------------------------------------------" + reset);
     }
 
+
+
     public static void printIssuedBooksList(Library library) {
         System.out.println(niceColor + "---------------------- Виданні книжки ----------------------" + reset);
         for (Map.Entry<String, List<Book>> mapEntry: library.getIssuedBooks().entrySet()) {
@@ -446,7 +448,7 @@ public class DataManipulation {
         for (User user : library.getUsers()) {
             if (user.getRecordNumber().equals(record)) {
                 userForReturn = user;
-                System.out.println("Перевірте данні книжки для видачи.");
+                System.out.println("Перевірте данні ористувача.");
                 System.out.println(userDataPrint(user));
                 break;
             }
@@ -459,7 +461,7 @@ public class DataManipulation {
         for (Book book : library.getBooks()) {
             if (book.getTitle().equals(title)) {
                 bookForReturn = book;
-                System.out.println("Перевірте данні книжки для видачи.");
+                System.out.println("Перевірте данні книжки для прийому.");
                 System.out.println(bookDataPrint(book));
                 break;
             }
@@ -479,6 +481,68 @@ public class DataManipulation {
                 System.out.println(errorColor+" Помилка! Повторіть введення... "+reset);
                 break;
         }
+    }
+
+    public static void issueBookToUser(Scanner scanner, Library library) {
+        User userInfo = null; // todo обробити щоб не null
+
+        System.out.println("Знайдемо користувача. Для цього введіть номер залікової книжки.");
+        String record = DataCheck.recordNumberCheck(scanner);
+        for (User user : library.getUsers()) {
+            if (user.getRecordNumber().equals(record)) {
+                userInfo = user;
+                System.out.println("Перевірте данні користувача.");
+                System.out.println(userDataPrint(user));
+                break;
+            }
+        }
+
+        System.out.println(niceColor + "[ - - - - - - - - - - Книжки у користувача користувача - - - - - - - - - - - ]" + reset);
+        List<Book> bookList = library.getIssuedBooks().get(record);
+        if (bookList.size() > 0) {
+            for (Book book: bookList) {
+                System.out.println(bookDataPrint(book));
+            }
+        } else {
+            System.out.println("Цей користувач не маю заброгодності книжкам.");
+        }
+        System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);
+    }
+
+    public static void availableBook(Scanner scanner, Library library) {
+        Book bookInfo = null; // todo обробити щоб не null
+
+        System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
+        // Перевіряти коретність введення назви книжки немає сенцу
+        scanner.nextLine();
+        String title = scanner.nextLine();
+        for (Book book : library.getBooks()) {
+            if (book.getTitle().equals(title)) {
+                bookInfo = book;
+                System.out.println("Перевірте данні книжки.");
+                System.out.println(bookDataPrint(book));
+                break;
+            }
+        }
+
+        System.out.println(niceColor + "[ - - - - - - - - - - Інформация про книжку - - - - - - - - - - - ]" + reset);
+        if (bookInfo.isAvailable()) {
+            System.out.println("Данна книжка знаходится бібліотеці.");
+        } else {
+            for (Map.Entry<String, List<Book>> mapEntry: library.getIssuedBooks().entrySet()) {
+                for (Book book : mapEntry.getValue()) {
+                    if (book.getId() == bookInfo.getId()) {
+                        System.out.println("Данна книжка видана наступному користовачу:");
+                        for (User user: library.getUsers()) {
+                            if (user.getRecordNumber().equals(mapEntry.getKey())) {
+                                System.out.println(userDataPrint(user));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);
     }
     //</editor-fold>
 }

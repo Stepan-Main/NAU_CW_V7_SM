@@ -14,7 +14,7 @@ public class Menu {
         int mainMenuChoice = scanner.nextInt();
         switch (mainMenuChoice) {
             case 1: // Видача/прийом книжок;
-                System.out.println(menuColor + " 1 - Видача книжок; 2 - Прийом книжок; 3 - Вийти " + reset);
+                System.out.println(menuColor + " 1 - Видача книжок; 2 - Прийом книжок; 3 - Виданні користувачу; 4 - Наявність; 5 - Вийти " + reset);
                 if (issueReceiptBooks(scanner, library)) return true;
                 break;
             case 2: // 2 - Керування данними;
@@ -126,7 +126,13 @@ public class Menu {
             case 2: // Прийом книжок
                 DataManipulation.receiptBook(scanner, library);
                 break;
-            case 3: // Вийти
+            case 3: // Видача книжок
+                DataManipulation.issueBookToUser(scanner, library);
+                break;
+            case 4: // Прийом книжок
+                DataManipulation.availableBook(scanner, library);
+                break;
+            case 5: // Вийти
                 DataManipulation.SaveDataToFile(library);
                 return true;
             default:

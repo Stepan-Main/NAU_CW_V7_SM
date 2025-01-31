@@ -12,6 +12,25 @@ public class DataCheck {
 
     //<editor-fold desc="User data check">
     static String strData;
+
+    public static Integer menuNumberCheck(Scanner scanner, int maxMenuNumber){
+        int number = 0;
+        while (true) {
+            strData = scanner.next();
+            if (!strData.matches("^\\d{1}$")) {
+                System.out.println(error(""));
+                continue;
+            }
+            number = Integer.parseInt(strData);
+            if (number <= 0 || number > maxMenuNumber) {
+                System.out.println(error(""));
+                continue;
+            }
+            break;
+        }
+        return number;
+    }
+
     public static String recordNumberCheck(Scanner scanner){
         while (!(strData = scanner.next()).matches("^\\d{6}$")) {
             System.out.println(error("\nНомер залівковки складается із 6 цифір."));

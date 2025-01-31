@@ -15,7 +15,13 @@ public class DataManipulation {
     public static final String errorColor = "\u001B[3;30;47m";
     public static final String reset = "\u001B[0m";
 
-    //<editor-fold desc="Users Data Manipulation">
+    // Метод що викликае метод запису данних у файл та виводи сповіщення
+    public static void SaveDataToFile(Library library) {
+        FileManager.saveFile("lib_data.json", library);
+        System.out.println(niceColor + " Данні записані." + reset);
+    }
+
+    //<editor-fold desc="Print Data">
     public static void printUsersList(Library library) {
         System.out.println(niceColor + "---------------------- Користувачі ----------------------" + reset);
         for (User user : library.getUsers()) {
@@ -32,7 +38,9 @@ public class DataManipulation {
                 user.getGroup() + " " +
                 user.getEmail();
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Users Data Manipulation">
     public static void addNewUser(Scanner scanner, Library library) {
         System.out.println("Ввести данні користувача: ");
         System.out.print(" - номер залікової книжки: ");
@@ -60,8 +68,7 @@ public class DataManipulation {
                 System.out.println(userDataPrint(user)); // Виводимо збережені дані користувача
                 System.out.println("Які данні ви бажайте відрагувати?\n" + menuColor +
                         " 1 - Імя; 2 - Прізвища; 3 - Побатькові; 4 - Номер групи; 5 - Email; 6 - Вийти " + reset);
-                int userFieldChoice = scanner.nextInt();
-                switch (userFieldChoice) {
+                switch (DataCheck.menuNumberCheck(scanner, 6)) {
                     case 1: // Імя
                         System.out.println("Ведіть нове імя");
                         user.setFirstName(DataCheck.nameCheck(scanner));
@@ -148,19 +155,13 @@ public class DataManipulation {
     }
 
     public static void listUsers(Scanner scanner, Library library) {
-        System.out.println(menuColor + "[ Список користувачів ] 0 - імені; 1 - прізвищу; 2 - академічній групі" + reset);
+        System.out.println(menuColor + " [ Список користувачів ]  1 - імені; 2 - прізвищу; 3 - академічній групі" + reset);
         List<User> users = library.getUsers();
         scanner.nextLine();
-        int listType = -1;
-        while (true) {
-            listType = scanner.nextInt();
-            if (listType == 1 || listType == 2 || listType == 3) break;
-            else System.out.println(errorColor + "Невірний" + reset);
-        }
 
         // Для сортування по користувачів по імені/прізвищю/групі використаем стандарні метод sort
         // Компаратор передаемо у вигляді лямда виразу
-        switch (listType) {
+        switch (DataCheck.menuNumberCheck(scanner, 3)) {
             case 1:
                 System.out.println(niceColor + "[ - - - - - - - - - - Список користувачів відсортуваний за іменем - - - - - - - - - - - ]" + reset);
                 users.sort((b1, b2) -> b1.getFirstName().compareToIgnoreCase(b2.getFirstName()));
@@ -197,9 +198,6 @@ public class DataManipulation {
         }
         System.out.println(niceColor + "----------------------------------------------------" + reset);
     }
-
-
-
     public static void printIssuedBooksList(Library library) {
         System.out.println(niceColor + "---------------------- Виданні книжки ----------------------" + reset);
         for (Map.Entry<String, List<Book>> mapEntry: library.getIssuedBooks().entrySet()) {
@@ -252,8 +250,7 @@ public class DataManipulation {
                 System.out.println(bookDataPrint(book)); // Виводимо збережені дані книжки
                 System.out.println("Які данні ви бажайте відрагувати?\n" + menuColor +
                         " 1 - ID; 2 - Назва; 3 - Автори; 4 - Видаництво; 5 - Кількість сторінок; 6 - Наявність; 7 - Вийти " + reset);
-                int userFieldChoice = scanner.nextInt();
-                switch (userFieldChoice) {
+                switch (DataCheck.menuNumberCheck(scanner, 7)) {
                     case 1: // ID
                         System.out.println("Ведіть нове ID");
                         book.setId(DataCheck.bookIDCheck(scanner));
@@ -344,44 +341,47 @@ public class DataManipulation {
     }
 
     public static void listBooks(Scanner scanner, Library library) {
-        System.out.println(menuColor + "[ Список книг ] 1 - назві; 2 - авторів" + reset);
+        System.out.println(menuColor + " [ Список книг ]  1 - назві; 2 - авторів" + reset);
         List<Book> books = library.getBooks();
         scanner.nextLine();
-        int listType = -1;
-        while (true) {
-            listType = scanner.nextInt();
-            if (listType == 0 || listType == 1) break;
-            else System.out.println(errorColor + "Невірний вибір. Повторіть..." + reset);
-        }
 
         // Для сортування по автору оба по назві використаем стандарні метод sort
         // Компаратор передаемо у вигляді лямда виразу
-        switch (listType) {
+        StringBuilder list = new StringBuilder();
+        switch (DataCheck.menuNumberCheck(scanner, 2)) {
             case 1:
-                System.out.println(niceColor + "[ - - - - - - - - - - Список книг відсортуваний за назвою - - - - - - - - - - - ]" + reset);
+                /*System.out.println(niceColor + "[ - - - - - - - - - - Список книг відсортуваний за назвою - - - - - - - - - - - ]" + reset);
                 books.sort((b1, b2) -> b1.getTitle().compareToIgnoreCase(b2.getTitle()));
                 for (Book book: books) {
                     System.out.println(bookDataPrint(book));
                 }
-                System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);
+                System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);*/
+
+                books.sort((b1, b2) -> b1.getTitle().compareToIgnoreCase(b2.getTitle()));
+                for (Book book: books) {
+                    if (list.length() > 0) list.append("\n");
+                    list.append(bookDataPrint(book));
+                }
+                printList(list.toString(),"Список книг відсортуваний за назвою");
             break;
             case 2:
-                System.out.println(niceColor + "[ - - - - - - - - - - Список книг відсортуваний за автором  - - - - - - - - - - ]" + reset);
+                /*System.out.println(niceColor + "[ - - - - - - - - - - Список книг відсортуваний за автором  - - - - - - - - - - ]" + reset);
                 books.sort((b1, b2) -> b1.getAuthor().compareToIgnoreCase(b2.getAuthor()));
                 for (Book book: books) {
                     System.out.println(bookDataPrint(book));
                 }
-                System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);
+                System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);*/
+
+                books.sort((b1, b2) -> b1.getAuthor().compareToIgnoreCase(b2.getAuthor()));
+                for (Book book: books) {
+                    if (list.length() > 0) list.append("\n");
+                    list.append(bookDataPrint(book));
+                }
+                printList(list.toString(),"Список книг відсортуваний за автором");
             break;
         }
     }
     //</editor-fold>
-
-    // Метод що викликае метод запису данних у файл та виводи сповіщення
-    public static void SaveDataToFile(Library library) {
-        FileManager.saveFile("lib_data.json", library);
-        System.out.println(niceColor + " Данні записані." + reset);
-    }
 
     //<editor-fold desc="Issue/Return">
     public static void issueBook(Scanner scanner, Library library) {
@@ -497,7 +497,7 @@ public class DataManipulation {
             }
         }
 
-        System.out.println(niceColor + "[ - - - - - - - - - - Книжки у користувача користувача - - - - - - - - - - - ]" + reset);
+        /*System.out.println(niceColor + "[ - - - - - - - - - - Книжки у користувача користувача - - - - - - - - - - - ]" + reset);
         List<Book> bookList = library.getIssuedBooks().get(record);
         if (bookList.size() > 0) {
             for (Book book: bookList) {
@@ -506,7 +506,19 @@ public class DataManipulation {
         } else {
             System.out.println("Цей користувач не маю заброгодності книжкам.");
         }
-        System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);
+        System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);*/
+
+        List<Book> bookList = library.getIssuedBooks().get(record);
+        if (bookList.size() > 0) {
+            StringBuilder list = new StringBuilder();
+            for (Book book: bookList) {
+                if (list.length() > 0) list.append("\n");
+                list.append(bookDataPrint(book));
+            }
+            printList(list.toString(),"Книжки у користувача користувача");
+        } else {
+            System.out.println("Цей користувач не маю заброгодності книжкам.");
+        }
     }
 
     public static void availableBook(Scanner scanner, Library library) {
@@ -525,7 +537,7 @@ public class DataManipulation {
             }
         }
 
-        System.out.println(niceColor + "[ - - - - - - - - - - Інформация про книжку - - - - - - - - - - - ]" + reset);
+        /*System.out.println(niceColor + "[ - - - - - - - - - - Інформация про книжку - - - - - - - - - - - ]" + reset);
         if (bookInfo.isAvailable()) {
             System.out.println("Данна книжка знаходится бібліотеці.");
         } else {
@@ -542,7 +554,133 @@ public class DataManipulation {
                 }
             }
         }
-        System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);
+        System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);*/
+
+        if (bookInfo.isAvailable()) {
+            System.out.println("Данна книжка знаходится бібліотеці.");
+        } else {
+            StringBuilder list = new StringBuilder();
+            for (Map.Entry<String, List<Book>> mapEntry: library.getIssuedBooks().entrySet()) {
+                for (Book book : mapEntry.getValue()) {
+                    if (book.getId() == bookInfo.getId()) {
+                        list.append("Данна книжка видана наступному користовачу:");
+                        for (User user: library.getUsers()) {
+                            if (user.getRecordNumber().equals(mapEntry.getKey())) {
+                                if (list.length() > 0) list.append("\n");
+                                list.append(userDataPrint(user));
+                            }
+                        }
+                    }
+                }
+            }
+            printList(list.toString(),"Інформация про книжку");
+        }
     }
     //</editor-fold>
+
+    //<editor-fold desc="Searching">
+    public static void searchingByFirstName(Scanner scanner, Library library) {
+        System.out.println(menuColor + " Ведіть частину имені користувача " + reset);
+        String firstName = DataCheck.nameCheck(scanner);
+        StringBuilder list = new StringBuilder();
+        for (User user: library.getUsers()) {
+            if (user.getFirstName().toLowerCase().contains(firstName.toLowerCase())) {
+                if (list.length() > 0) list.append("\n");
+                list.append(userDataPrint(user));
+            }
+        }
+        printList(list.toString(), "Список користувачів");
+    }
+
+    public static void searchingBySecondName(Scanner scanner, Library library) {
+        System.out.println(menuColor + " Ведіть частину прізвища користувача " + reset);
+        String secondName = DataCheck.nameCheck(scanner);
+        StringBuilder list = new StringBuilder();
+        for (User user: library.getUsers()) {
+            if (user.getLastName().toLowerCase().contains(secondName.toLowerCase())) {
+                if (list.length() > 0) list.append("\n");
+                list.append(userDataPrint(user));
+            }
+        }
+        printList(list.toString(), "Список користувачів");
+    }
+
+    public static void searchingByThirdName(Scanner scanner, Library library) {
+        System.out.println(menuColor + " Ведіть частину побатькові користувача " + reset);
+        String thirdName = DataCheck.nameCheck(scanner);
+        StringBuilder list = new StringBuilder();
+        for (User user: library.getUsers()) {
+            if (user.getSurname().toLowerCase().contains(thirdName.toLowerCase())) {
+                if (list.length() > 0) list.append("\n");
+                list.append(userDataPrint(user));
+            }
+        }
+        printList(list.toString(), "Список користувачів");
+    }
+
+    public static void searchingByGroup(Scanner scanner, Library library) {
+        System.out.println(menuColor + " Ведіть номер групи " + reset);
+        String group = DataCheck.groupCheck(scanner);
+        StringBuilder list = new StringBuilder();
+        for (User user: library.getUsers()) {
+            if (user.getGroup().toLowerCase().contains(group.toLowerCase())) {
+                if (list.length() > 0) list.append("\n");
+                list.append(userDataPrint(user));
+            }
+        }
+        printList(list.toString(), "Список користувачів");
+    }
+
+    public static void searchingByTitle(Scanner scanner, Library library) {
+        System.out.println(menuColor + " Ведіть частину назви книжки " + reset);
+        scanner.nextLine();
+        String title = scanner.nextLine();
+        StringBuilder list = new StringBuilder();
+        for (Book book: library.getBooks()) {
+            if (book.getTitle().toLowerCase().contains(title.toLowerCase())) {
+                if (list.length() > 0) list.append("\n");
+                list.append(bookDataPrint(book));
+            }
+        }
+        printList(list.toString(), "Список книг");
+    }
+
+    public static void searchingByAuthor(Scanner scanner, Library library) {
+        System.out.println(menuColor + " Ведіть частину прізвищя автора " + reset);
+        scanner.nextLine();
+        String author = scanner.nextLine();
+        StringBuilder list = new StringBuilder();
+        for (Book book: library.getBooks()) {
+            if (book.getAuthor().toLowerCase().contains(author.toLowerCase())) {
+                if (list.length() > 0) list.append("\n");
+                list.append(bookDataPrint(book));
+            }
+        }
+        printList(list.toString(), "Список книг");
+    }
+
+    public static void searchingByPublisher(Scanner scanner, Library library) {
+        System.out.println(menuColor + " Ведіть частину назви видавця " + reset);
+        scanner.nextLine();
+        String publisher = scanner.nextLine();
+        StringBuilder list = new StringBuilder();
+        for (Book book: library.getBooks()) {
+            if (book.getPublisher().toLowerCase().contains(publisher.toLowerCase())) {
+                if (list.length() > 0) list.append("\n");
+                list.append(bookDataPrint(book));
+            }
+        }
+        printList(list.toString(), "Список книг");
+    }
+    //</editor-fold>
+
+    public static void printList(String list, String listTitle) {
+        if (list.length() > 0) {
+            System.out.println(niceColor + "[ - - - - - - - - - - " + listTitle + " - - - - - - - - - - ]" + reset);
+            System.out.println(list);
+            System.out.println(niceColor + "[ - - - - - - - - - - - " + "- ".repeat((listTitle.length() + 1) / 2) + "- - - - - - - - - ]" + reset);
+        } else {
+            System.out.println("Не знайдено");
+        }
+    }
 }

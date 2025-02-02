@@ -1,4 +1,3 @@
-import CustomExceptions.LimitExceededException;
 import MainClasses.Library;
 import Utils.DataCheck;
 import Utils.DataManipulation;
@@ -7,7 +6,7 @@ import java.util.Scanner;
 
 public class Menu {
     public static final String menuColor = "\u001B[3;30;44m";
-    public static final String errorColor = "\u001B[3;30;47m";
+    public static final String errorColor = "\u001B[1;30;41m";
     public static final String reset = "\u001B[0m";
 
     public static boolean mainMenu(Scanner scanner, Library library) {
@@ -30,7 +29,7 @@ public class Menu {
                 if (searching(scanner, library)) return true;
                 break;
             case 5: // Вийти
-                DataManipulation.SaveDataToFile(library);
+                DataManipulation.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + "Помилка! Повторіть введення..." + reset);
@@ -50,7 +49,7 @@ public class Menu {
                 if (userSearching(scanner, library)) return true;
                 break;
             case 3: // Вийти
-                DataManipulation.SaveDataToFile(library);
+                DataManipulation.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -74,7 +73,7 @@ public class Menu {
                 DataManipulation.searchingByGroup(scanner, library);
                 break;
             case 5: // Вийти
-                DataManipulation.SaveDataToFile(library);
+                DataManipulation.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -95,7 +94,7 @@ public class Menu {
                 DataManipulation.searchingByPublisher(scanner, library);
                 break;
             case 4: // Вийти
-                DataManipulation.SaveDataToFile(library);
+                DataManipulation.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -116,7 +115,7 @@ public class Menu {
                 if (userManagement(scanner, library)) return true;
                 break;
             case 3: // Вийти
-                DataManipulation.SaveDataToFile(library);
+                DataManipulation.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -143,7 +142,7 @@ public class Menu {
                 DataManipulation.listUsers(scanner, library);
                 break;
             case 6: // Вийти
-                DataManipulation.SaveDataToFile(library);
+                DataManipulation.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -172,7 +171,7 @@ public class Menu {
                 break;
 
             case 6: // Вийти
-                DataManipulation.SaveDataToFile(library);
+                DataManipulation.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -196,7 +195,7 @@ public class Menu {
                 DataManipulation.availableBook(scanner, library);
                 break;
             case 5: // Вийти
-                DataManipulation.SaveDataToFile(library);
+                DataManipulation.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -218,7 +217,7 @@ public class Menu {
                 DataManipulation.printIssuedBooksList(library);
                 break;
             case 4: // Вийти
-                DataManipulation.SaveDataToFile(library);
+                DataManipulation.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);

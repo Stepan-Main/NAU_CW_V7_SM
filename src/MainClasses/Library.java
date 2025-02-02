@@ -13,15 +13,8 @@ public class Library {
     //<editor-fold desc="Class fields">
     private List<User> users = new ArrayList<>();;
     private List<Book> books = new ArrayList<>();
-//    private Map<User, List<Book>> issuedBooks = new HashMap<>();
     private Map<String, List<Book>> issuedBooks = new HashMap<>();
     //</editor-fold>
-
-//    public Library(List<User> users, List<Book> books, Map<User, List<Book>> issuedBooks) {
-//        this.users = users;
-//        this.books = books;
-//        this.issuedBooks = issuedBooks;
-//    }
 
     //<editor-fold desc="Library business-logic">
     // Метод видає книжку користувачу

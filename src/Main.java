@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Main {
     public static final String niceColor = "\u001B[3;30;42m";
-    public static final String errorColor = "\u001B[3;30;47m";
+    public static final String errorColor = "\u001B[1;30;41m";
     public static final String reset = "\u001B[0m";
 
     public static void main(String[] args) {

@@ -1,8 +1,6 @@
-package MainClasses;
+package Models;
 
 import CustomExceptions.LimitExceededException;
-import MainClasses.Editions.Book;
-import MainClasses.Users.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +49,7 @@ public class Library {
 
         // Якщо список книжок користувача не пустий
         // Вдаляємо книжку із списку
-        if (issuedBooks != null) {
+        if (user != null && issuedBooks != null) {
             // Якщо видалення пройшло успішно помічаємо книжку як доступну
             // && issuedBooks.remove(book)
             List<Book> booksOnHand = issuedBooks.get(user.getRecordNumber());

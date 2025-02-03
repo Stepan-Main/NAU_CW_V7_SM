@@ -1,4 +1,4 @@
-package MainClasses.Users;
+package Models;
 
 import java.io.Serializable;
 
@@ -81,4 +81,15 @@ public class User implements Serializable {
         this.email = email;
     }
     //</editor-fold>
+
+
+    @Override
+    public String toString() {
+        return recordNumber + " " +
+                firstName + " " +
+                lastName + " " +
+                surname + " " +
+                group + " " +
+                email;
+    }
 }

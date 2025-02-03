@@ -1,6 +1,8 @@
 package Utils;
 
 // додамо у project structure Google Json бібліотеку з Maven
+import Models.Library;
+import Services.DataManipulation;
 import com.google.gson.Gson;
 import org.jetbrains.annotations.*;
 
@@ -40,5 +42,11 @@ public class FileManager {
         }
         // Інакше повернемо null
         return null;
+    }
+
+    // Метод що викликае метод запису данних у файл та виводи сповіщення
+    public static void saveDataToFile(Library library) {
+        saveFile("lib_data.json", library);
+        System.out.println(DataManipulation.niceColor + " Данні записані." + DataManipulation.reset);
     }
 }

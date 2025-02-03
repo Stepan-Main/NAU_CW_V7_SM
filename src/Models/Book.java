@@ -1,4 +1,4 @@
-package MainClasses.Editions;
+package Models;
 
 import java.io.Serializable;
 
@@ -72,4 +72,14 @@ public class Book implements Serializable {
         this.available = available;
     }
     //</editor-fold>
+
+    @Override
+    public String toString() {
+        return id + " " +
+                title + " " +
+                author + " " +
+                publisher + " " +
+                pages + " " +
+                available;
+    }
 }

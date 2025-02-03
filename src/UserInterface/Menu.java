@@ -1,10 +1,19 @@
-import MainClasses.Library;
+package UserInterface;
+
+import Models.Library;
+import Services.BookDataManipulation;
+import Services.IssueManipulation;
+import Services.Searching;
 import Utils.DataCheck;
-import Utils.DataManipulation;
+import Services.DataManipulation;
+import Utils.FileManager;
 
 import java.util.Scanner;
 
+import static Services.UserDataManipulation.*;
+
 public class Menu {
+
     public static final String menuColor = "\u001B[3;30;44m";
     public static final String errorColor = "\u001B[1;30;41m";
     public static final String reset = "\u001B[0m";
@@ -29,7 +38,7 @@ public class Menu {
                 if (searching(scanner, library)) return true;
                 break;
             case 5: // Вийти
-                DataManipulation.saveDataToFile(library);
+                FileManager.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + "Помилка! Повторіть введення..." + reset);
@@ -49,7 +58,7 @@ public class Menu {
                 if (userSearching(scanner, library)) return true;
                 break;
             case 3: // Вийти
-                DataManipulation.saveDataToFile(library);
+                FileManager.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -61,19 +70,19 @@ public class Menu {
     private static boolean userSearching(Scanner scanner, Library library) {
         switch (DataCheck.menuNumberCheck(scanner, 5)) {
             case 1: // Пошук по Імені
-                DataManipulation.searchingByFirstName(scanner, library);
+                Searching.searchingByFirstName(scanner, library);
                 break;
             case 2: // Пошук по Прізвищю
-                DataManipulation.searchingBySecondName(scanner, library);
+                Searching.searchingBySecondName(scanner, library);
                 break;
             case 3: // Пошук по Побатькові
-                DataManipulation.searchingByThirdName(scanner, library);
+                Searching.searchingByThirdName(scanner, library);
                 break;
             case 4: // Пошук по Групі
-                DataManipulation.searchingByGroup(scanner, library);
+                Searching.searchingByGroup(scanner, library);
                 break;
             case 5: // Вийти
-                DataManipulation.saveDataToFile(library);
+                FileManager.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -85,16 +94,16 @@ public class Menu {
     private static boolean bookSearching(Scanner scanner, Library library) {
         switch (DataCheck.menuNumberCheck(scanner, 4)) {
             case 1: // Пошук по Назві
-                DataManipulation.searchingByTitle(scanner, library);
+                Searching.searchingByTitle(scanner, library);
                 break;
             case 2: // Пошук по Автору
-                DataManipulation.searchingByAuthor(scanner, library);
+                Searching.searchingByAuthor(scanner, library);
                 break;
             case 3: // Пошук по Видавецю
-                DataManipulation.searchingByPublisher(scanner, library);
+                Searching.searchingByPublisher(scanner, library);
                 break;
             case 4: // Вийти
-                DataManipulation.saveDataToFile(library);
+                FileManager.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -115,7 +124,7 @@ public class Menu {
                 if (userManagement(scanner, library)) return true;
                 break;
             case 3: // Вийти
-                DataManipulation.saveDataToFile(library);
+                FileManager.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -127,22 +136,22 @@ public class Menu {
     public static boolean userManagement(Scanner scanner, Library library) {
         switch (DataCheck.menuNumberCheck(scanner, 6)) {
             case 1: // Додати користувача
-                DataManipulation.addNewUser(scanner, library);
+                addNewUser(scanner, library);
                 break;
             case 2: // Редагувати данні користувача
-                DataManipulation.editUserData(scanner, library);
+                editUserData(scanner, library);
                 break;
             case 3: // Видалити користувача
-                DataManipulation.deleteUser(scanner, library);
+                deleteUser(scanner, library);
                 break;
             case 4: // Переглянути дані користувача
-                DataManipulation.viewDataUser(scanner, library);
+                viewDataUser(scanner, library);
                 break;
             case 5: // Список користувачів
-                DataManipulation.listUsers(scanner, library);
+                listUsers(scanner, library);
                 break;
             case 6: // Вийти
-                DataManipulation.saveDataToFile(library);
+                FileManager.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -154,24 +163,24 @@ public class Menu {
     public static boolean bookManagement(Scanner scanner, Library library) {
         switch (DataCheck.menuNumberCheck(scanner, 6)) {
             case 1: // Додати книжку
-                DataManipulation.addNewBook(scanner, library);
+                BookDataManipulation.addNewBook(scanner, library);
                 break;
             case 2: // Редагувати данні книжки
-                DataManipulation.editBookData(scanner, library);
+                BookDataManipulation.editBookData(scanner, library);
                 break;
             case 3: // Видалити книжку
-                DataManipulation.deleteBook(scanner, library);
+                BookDataManipulation.deleteBook(scanner, library);
                 break;
 
             case 4: // Переглянути дані книжки
-                DataManipulation.viewDataBook(scanner, library);
+                BookDataManipulation.viewDataBook(scanner, library);
                 break;
             case 5: // Список книжок
-                DataManipulation.listBooks(scanner, library);
+                BookDataManipulation.listBooks(scanner, library);
                 break;
 
             case 6: // Вийти
-                DataManipulation.saveDataToFile(library);
+                FileManager.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -183,19 +192,19 @@ public class Menu {
     public static boolean issueReceiptBooks(Scanner scanner, Library library) {
         switch (DataCheck.menuNumberCheck(scanner, 5)) {
             case 1: // Видача книжок
-                DataManipulation.issueBook(scanner, library);
+                IssueManipulation.issueBook(scanner, library);
                 break;
             case 2: // Прийом книжок
-                DataManipulation.receiptBook(scanner, library);
+                IssueManipulation.receiptBook(scanner, library);
                 break;
             case 3: // Видача книжок
-                DataManipulation.issueBookToUser(scanner, library);
+                IssueManipulation.issueBookToUser(scanner, library);
                 break;
             case 4: // Прийом книжок
-                DataManipulation.availableBook(scanner, library);
+                IssueManipulation.availableBook(scanner, library);
                 break;
             case 5: // Вийти
-                DataManipulation.saveDataToFile(library);
+                FileManager.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);
@@ -204,20 +213,19 @@ public class Menu {
         return false;
     }
 
-    // Звідність
     public static boolean reporting(Scanner scanner, Library library) {
         switch (DataCheck.menuNumberCheck(scanner, 4)) {
             case 1: // Надрукувати список книжок
-                DataManipulation.printBooksList(library);
+                BookDataManipulation.printBooksList(library);
                 break;
             case 2: // Надрукування список користувачів
                 DataManipulation.printUsersList(library);
                 break;
             case 3: // Надрукувати список користувачів із списками виданних книжок
-                DataManipulation.printIssuedBooksList(library);
+                BookDataManipulation.printIssuedBooksList(library);
                 break;
             case 4: // Вийти
-                DataManipulation.saveDataToFile(library);
+                FileManager.saveDataToFile(library);
                 return true;
             default:
                 System.out.println(errorColor + " Помилка! Повторіть введення... " + reset);

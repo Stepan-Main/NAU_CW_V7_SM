@@ -13,7 +13,7 @@ public class Searching extends DataManipulation {
 
     //<editor-fold desc="Searching">
     public static void searchingByFirstName(Scanner scanner, Library library) {
-        System.out.println(menuColor + " Ведіть частину имені користувача " + reset);
+        System.out.println(menuColor + " Введіть частину имені користувача " + reset);
         String firstName = nameCheck(scanner);
         StringBuilder list = new StringBuilder();
         for (User user: library.getUsers()) {
@@ -26,7 +26,7 @@ public class Searching extends DataManipulation {
     }
 
     public static void searchingBySecondName(Scanner scanner, Library library) {
-        System.out.println(menuColor + " Ведіть частину прізвища користувача " + reset);
+        System.out.println(menuColor + " Введіть частину прізвища користувача " + reset);
         String secondName = nameCheck(scanner);
         StringBuilder list = new StringBuilder();
         for (User user: library.getUsers()) {
@@ -39,7 +39,7 @@ public class Searching extends DataManipulation {
     }
 
     public static void searchingByThirdName(Scanner scanner, Library library) {
-        System.out.println(menuColor + " Ведіть частину побатькові користувача " + reset);
+        System.out.println(menuColor + " Введіть частину побатькові користувача " + reset);
         String thirdName = nameCheck(scanner);
         StringBuilder list = new StringBuilder();
         for (User user: library.getUsers()) {
@@ -52,7 +52,7 @@ public class Searching extends DataManipulation {
     }
 
     public static void searchingByGroup(Scanner scanner, Library library) {
-        System.out.println(menuColor + " Ведіть номер групи " + reset);
+        System.out.println(menuColor + " Введіть номер групи " + reset);
         String group = groupCheck(scanner);
         StringBuilder list = new StringBuilder();
         for (User user: library.getUsers()) {
@@ -65,7 +65,7 @@ public class Searching extends DataManipulation {
     }
 
     public static void searchingByTitle(Scanner scanner, Library library) {
-        System.out.println(menuColor + " Ведіть частину назви книжки " + reset);
+        System.out.println(menuColor + " Введіть частину назви книжки " + reset);
         String title = scanner.nextLine();
         StringBuilder list = new StringBuilder();
         for (Book book: library.getBooks()) {
@@ -78,7 +78,7 @@ public class Searching extends DataManipulation {
     }
 
     public static void searchingByAuthor(Scanner scanner, Library library) {
-        System.out.println(menuColor + " Ведіть частину прізвищя автора " + reset);
+        System.out.println(menuColor + " Введіть частину прізвища автора " + reset);
         String author = scanner.nextLine();
         StringBuilder list = new StringBuilder();
         for (Book book: library.getBooks()) {
@@ -91,7 +91,7 @@ public class Searching extends DataManipulation {
     }
 
     public static void searchingByPublisher(Scanner scanner, Library library) {
-        System.out.println(menuColor + " Ведіть частину назви видавця " + reset);
+        System.out.println(menuColor + " Введіть частину назви видавця " + reset);
         String publisher = scanner.nextLine();
         StringBuilder list = new StringBuilder();
         for (Book book: library.getBooks()) {

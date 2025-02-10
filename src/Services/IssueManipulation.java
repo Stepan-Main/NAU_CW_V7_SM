@@ -29,7 +29,7 @@ public class IssueManipulation extends DataManipulation {
         }
 
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
-        // Перевіряти коретність введення назви книжки немає сенцу
+        // Перевіряти коректність введення назви книжки немає сенсу
         String title = scanner.nextLine();
         for (Book book : library.getBooks()) {
             if (book.getTitle().equals(title)) {
@@ -38,7 +38,7 @@ public class IssueManipulation extends DataManipulation {
                     break;
                 }
                 bookForIssue = book;
-                System.out.println("Перевірте данні книжки для видачи.");
+                System.out.println("Перевірте дані книжки для видачи.");
                 System.out.println(book);
                 break;
             }
@@ -77,19 +77,19 @@ public class IssueManipulation extends DataManipulation {
         for (User user : library.getUsers()) {
             if (user.getRecordNumber().equals(record)) {
                 userForReturn = user;
-                System.out.println("Перевірте данні ористувача.");
+                System.out.println("Перевірте дані користувача.");
                 System.out.println(user);
                 break;
             }
         }
 
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
-        // Перевіряти коретність введення назви книжки немає сенцу
+        // Перевіряти коректність введення назви книжки немає сенсу
         String title = scanner.nextLine();
         for (Book book : library.getBooks()) {
             if (book.getTitle().equals(title)) {
                 bookForReturn = book;
-                System.out.println("Перевірте данні книжки для прийому.");
+                System.out.println("Перевірте дані книжки для прийому.");
                 System.out.println(book);
                 break;
             }
@@ -117,7 +117,7 @@ public class IssueManipulation extends DataManipulation {
         String record = recordNumberCheck(scanner);
         for (User user : library.getUsers()) {
             if (user.getRecordNumber().equals(record)) {
-                System.out.println("Перевірте данні користувача.");
+                System.out.println("Перевірте дані користувача.");
                 System.out.println(user);
                 break;
             }
@@ -130,9 +130,9 @@ public class IssueManipulation extends DataManipulation {
                 if (list.length() > 0) list.append("\n");
                 list.append(book);
             }
-            printList(list.toString(),"Книжки у користувача користувача");
+            printList(list.toString(),"Книжки у користувача");
         } else {
-            System.out.println("Цей користувач не маю заброгодності книжкам.");
+            System.out.println("Цей користувач не має заборгованості.");
         }
     }
 
@@ -140,13 +140,13 @@ public class IssueManipulation extends DataManipulation {
         Book bookInfo = null;
 
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
-        // Перевіряти коретність введення назви книжки немає сенцу
+        // Перевіряти коректність введення назви книжки немає сенсу
 
         String title = scanner.nextLine();
         for (Book book : library.getBooks()) {
             if (book.getTitle().equals(title)) {
                 bookInfo = book;
-                System.out.println("Перевірте данні книжки.");
+                System.out.println("Перевірте дані книжки.");
                 System.out.println(book);
                 break;
             }
@@ -154,13 +154,13 @@ public class IssueManipulation extends DataManipulation {
 
         if (bookInfo != null) {
             if (bookInfo.isAvailable()) {
-                System.out.println("Данна книжка знаходится бібліотеці.");
+                System.out.println("Дана книжка знаходится у бібліотеці.");
             } else {
                 StringBuilder list = new StringBuilder();
                 for (Map.Entry<String, List<Book>> mapEntry: library.getIssuedBooks().entrySet()) {
                     for (Book book : mapEntry.getValue()) {
                         if (book.getId() == bookInfo.getId()) {
-                            list.append("Данна книжка видана наступному користовачу:");
+                            list.append("Дана книжка видана наступному користувачу:");
                             for (User user: library.getUsers()) {
                                 if (user.getRecordNumber().equals(mapEntry.getKey())) {
                                     if (list.length() > 0) list.append("\n");
@@ -170,7 +170,7 @@ public class IssueManipulation extends DataManipulation {
                         }
                     }
                 }
-                printList(list.toString(),"Інформация про книжку");
+                printList(list.toString(),"Інформація про книжку");
             }
         }
     }

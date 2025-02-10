@@ -14,10 +14,10 @@ public class UserDataManipulation extends DataManipulation {
 
     //<editor-fold desc="Users Data Manipulation">
     public static void addNewUser(Scanner scanner, Library library) {
-        System.out.println("Ввести данні користувача: ");
+        System.out.println("Ввести дані користувача: ");
         System.out.print(" - номер залікової книжки: ");
         String recordNumber = recordNumberCheck(scanner);
-        System.out.print(" - імя: ");
+        System.out.print(" - ім'я: ");
         String firstName = nameCheck(scanner);
         System.out.print(" - прізвище: ");
         String lastName = nameCheck(scanner);
@@ -39,27 +39,27 @@ public class UserDataManipulation extends DataManipulation {
         for (User user:library.getUsers()) {
             if (user.getRecordNumber().equals(recordNumber)) {
                 System.out.println(user); // Виводимо збережені дані користувача
-                System.out.println("Які данні ви бажайте відрагувати?\n" + menuColor +
-                        " 1 - Імя; 2 - Прізвища; 3 - Побатькові; 4 - Номер групи; 5 - Email; 6 - Вийти " + reset);
+                System.out.println("Які данні ви бажаєте відредагувати?\n" + menuColor +
+                        " 1 - Ім'я; 2 - Прізвища; 3 - Побатькові; 4 - Номер групи; 5 - Email; 6 - Вийти " + reset);
                 switch (menuNumberCheck(scanner, 6)) {
-                    case 1: // Імя
-                        System.out.println("Ведіть нове імя");
+                    case 1: // Ім'я
+                        System.out.println("Введіть нове ім'я");
                         user.setFirstName(nameCheck(scanner));
                         break;
                     case 2: // Прізвища
-                        System.out.println("Ведіть нове прізвище");
+                        System.out.println("Введіть нове прізвище");
                         user.setLastName(nameCheck(scanner));
                         break;
                     case 3: // Побатькові
-                        System.out.println("Ведіть нове побатькові");
+                        System.out.println("Введіть нове побатькові");
                         user.setSurname(nameCheck(scanner));
                         break;
                     case 4: // Номер групи
-                        System.out.println("Ведіть новий номер групи");
+                        System.out.println("Введіть новий номер групи");
                         user.setGroup(groupCheck(scanner));
                         break;
                     case 5: // Email
-                        System.out.println("Ведіть новий email");
+                        System.out.println("Введіть новий email");
                         user.setEmail(emailCheck(scanner));
                         break;
                     case 6: // Вийти
@@ -69,7 +69,7 @@ public class UserDataManipulation extends DataManipulation {
                         System.out.println("Помилка! Повторіть введення...");
                         break;
                 }
-                System.out.println("Данні користувача з номером залікової книжки " + recordNumber + " відредаговано.");
+                System.out.println("Дані користувача з номером залікової книжки " + recordNumber + " відредаговано.");
                 System.out.println(user);
             }
         }
@@ -79,10 +79,10 @@ public class UserDataManipulation extends DataManipulation {
     public static void deleteUser(Scanner scanner, Library library) {
         System.out.println("Знайдемо користувача. Для цього введіть номер заликової книжки.");
         String recordNumber = recordNumberCheck(scanner);
-        boolean isDeleted = false; // Флаг для виходу з ціклу для забобігання ConcurrentModificationException
+        boolean isDeleted = false; // Флаг для виходу з ціклу для запобігання ConcurrentModificationException
         for (User user : library.getUsers()) {
             if (user.getRecordNumber().equals(recordNumber)) {
-                System.out.println("Перевірте данні користувача для видалення.");
+                System.out.println("Перевірте дані користувача для видалення.");
                 System.out.println(user);
                 System.out.println(menuColor + " Yes - Видалити користувача; No - Не видаляти користувача " + reset);
                 String choice = scanner.nextLine();
@@ -93,7 +93,7 @@ public class UserDataManipulation extends DataManipulation {
                         isDeleted = true;
                         break;
                     case "No":
-                        System.out.println("Користувача не видалений");
+                        System.out.println("Користувача не видалено");
                         break;
                     default:
                         System.out.println("Помилка! Повторіть введення...");
@@ -107,9 +107,9 @@ public class UserDataManipulation extends DataManipulation {
 
     public static void viewDataUser(Scanner scanner, Library library) {
         System.out.println("Знайдемо користувача. Для цього введіть його дані.");
-        System.out.println("Імя: ");
+        System.out.println("Ім'я: ");
         String firstName = nameCheck(scanner);
-        System.out.println("Призвище: ");
+        System.out.println("Прізвище: ");
         String lastName = nameCheck(scanner);
         System.out.println("Побатькові: ");
         String surname = nameCheck(scanner);
@@ -134,11 +134,11 @@ public class UserDataManipulation extends DataManipulation {
         System.out.println(menuColor + " [ Список користувачів ]  1 - імені; 2 - прізвищу; 3 - академічній групі" + reset);
         List<User> users = library.getUsers();
 
-        // Для сортування по користувачів по імені/прізвищю/групі використаем стандарні метод sort
-        // Компаратор передаемо у вигляді лямда виразу
+        // Для сортування користувачів по імені/прізвищу/групі використаем стандартний метод sort
+        // Компаратор передаємо у вигляді лямбда виразу
         switch (menuNumberCheck(scanner, 3)) {
             case 1:
-                System.out.println(niceColor + "[ - - - - - - - - - - Список користувачів відсортуваний за іменем - - - - - - - - - - - ]" + reset);
+                System.out.println(niceColor + "[ - - - - - - - - - - Список користувачів відсортований за ім'ям - - - - - - - - - - - ]" + reset);
                 users.sort((b1, b2) -> b1.getFirstName().compareToIgnoreCase(b2.getFirstName()));
                 for (User user: users) {
                     System.out.println(user);
@@ -146,7 +146,7 @@ public class UserDataManipulation extends DataManipulation {
                 System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);
             break;
             case 2:
-                System.out.println(niceColor + "[ - - - - - - - - - - Список користувачів відсортуваний за прізвищем  - - - - - - - - - - ]" + reset);
+                System.out.println(niceColor + "[ - - - - - - - - - - Список користувачів відсортований за прізвищем  - - - - - - - - - - ]" + reset);
                 users.sort((b1, b2) -> b1.getLastName().compareToIgnoreCase(b2.getLastName()));
                 for (User user: users) {
                     System.out.println(user);
@@ -154,7 +154,7 @@ public class UserDataManipulation extends DataManipulation {
                 System.out.println(niceColor + "[ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ]" + reset);
             break;
             case 3:
-                System.out.println(niceColor + "[ - - - - - - - - - - Список користувачів відсортуваний за групою - - - - - - - - - - ]" + reset);
+                System.out.println(niceColor + "[ - - - - - - - - - - Список користувачів відсортований за групою - - - - - - - - - - ]" + reset);
                 users.sort((b1, b2) -> b1.getGroup().compareToIgnoreCase(b2.getGroup()));
                 for (User user: users) {
                     System.out.println(user);

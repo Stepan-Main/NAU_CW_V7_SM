@@ -17,40 +17,40 @@ public class Library {
     //<editor-fold desc="Library business-logic">
     // Метод видає книжку користувачу
     public void addIssuedBook(/*User user*/String userRecordNumber, Book book) throws LimitExceededException {
-        // Внутрішній массив книжок отриманих користувачем
+        // Внутрішній масив книжок отриманих користувачем
         List<Book> userBooks = issuedBooks.get(userRecordNumber);
 
-        // Перевіряємо чи існує список книжок користувача щоб запобігти NullPointerException
+        // Перевіряємо, чи існує список книжок користувача, щоб запобігти NullPointerException
         if (userBooks == null) {
-            // Якщо список не існує додаємо порожній список
+            // Якщо список не існує, додаємо порожній список
             userBooks = new ArrayList<>();
             // Додаємо список в карточку користувача
             issuedBooks.put(userRecordNumber, userBooks);
         }
 
         // Перевірка кількості виданих книжок для користувача
-        // Викинемо виняток LimitExceededException якщо користувач уже узяв більше ніж 5 книжок.
+        // Викинемо виняток LimitExceededException, якщо користувач уже узяв більше ніж 5 книжок.
         if (userBooks.size() >= 5) {
-            throw new LimitExceededException("Кристувач не може отрмати більш ниж 5 книжок.");
+            throw new LimitExceededException("Користувач не може отримати більш ніж 5 книжок.");
         }
 
         // Додавання книжки до списку користувача
         if (userBooks.add(book)) {
             // Якщо видача пройшла успішно
-            // Встановлюємо помітку що книжка видана і більше недоступна
+            // Встановлюємо помітку, що книжка видана і більше недоступна
             book.setAvailable(false);
         }
     }
 
     // Метод повертає книжку у бібліотеку
     public void returnBook(User user, Book book) {
-        // Внутнішний массив книжок отриманих користувачем
+        // Внутнішний масив книжок, отриманих користувачем
         //List<Book> userBooks = issuedBooks.get(user);
 
         // Якщо список книжок користувача не пустий
-        // Вдаляємо книжку із списку
+        // Видаляємо книжку із списку
         if (user != null && issuedBooks != null) {
-            // Якщо видалення пройшло успішно помічаємо книжку як доступну
+            // Якщо видалення пройшло успішно, помічаємо книжку як доступну
             // && issuedBooks.remove(book)
             List<Book> booksOnHand = issuedBooks.get(user.getRecordNumber());
             for (int i = 0; i < booksOnHand.size(); i++) {
@@ -65,7 +65,7 @@ public class Library {
     //</editor-fold>
 
     //<editor-fold desc="User business logic">
-    // Додаємо користвача у картотеку бібліотеки
+    // Додаємо користувача у картотеку бібліотеки
     public boolean addUser(User user) {
         return users.add(user);
     }
@@ -74,7 +74,7 @@ public class Library {
         return users;
     }
 
-    // Додаємо користвача у картотеку бібліотеки
+    // Додаємо користувача у картотеку бібліотеки
     public boolean deleteUser(User user) {
         return users.remove(user);
     }

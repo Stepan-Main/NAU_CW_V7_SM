@@ -32,20 +32,20 @@ public class BookDataManipulation extends DataManipulation {
             if (list.length() > 0) list.append("\n");
             list.append(mapEntry.getKey() + " : " + list1);
         }
-        printList(list.toString(), "Виданні книжки");
+        printList(list.toString(), "Видані книжки");
     }
 
     public static void addNewBook(Scanner scanner, Library library) {
-        System.out.println("Ввсести данні книжки:");
+        System.out.println("Ввести дані книжки:");
         System.out.print(" - ID книжки: ");
         int id = bookIDCheck(scanner);
         System.out.print(" - Назва книжки: ");
-        // Перевіряти коретність введення назви книжки немає сенcу
+        // Перевіряти коректність введення назви книжки немає сенcу
         String title = scanner.nextLine();
         System.out.print(" - Автори книжки: ");
         String author = authorNameCheck(scanner);
-        System.out.print(" - Видаництво книжки: ");
-        // Перевіряти коретність введення назви книжки немає сенcу
+        System.out.print(" - Видавництво книжки: ");
+        // Перевіряти коректність введення назви книжки немає сенcу
         String publisher = scanner.nextLine();
         System.out.print(" - Кількість сторінок: ");
         int pages = pagesCheck(scanner);
@@ -59,38 +59,38 @@ public class BookDataManipulation extends DataManipulation {
 
     public static void editBookData(Scanner scanner, Library library) {
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
-        // Перевіряти коретність введення назви книжки немає сенcу
+        // Перевіряти коректність введення назви книжки немає сенcу
         String title = scanner.nextLine();
         for (Book book : library.getBooks()) {
             if (book.getTitle().equals(title)) {
                 System.out.println(book); // Виводимо збережені дані книжки
-                System.out.println("Які данні ви бажайте відрагувати?\n" + menuColor +
-                        " 1 - ID; 2 - Назва; 3 - Автори; 4 - Видаництво; 5 - Кількість сторінок; 6 - Наявність; 7 - Вийти " + reset);
+                System.out.println("Які дані ви бажаєте відредагувати?\n" + menuColor +
+                        " 1 - ID; 2 - Назва; 3 - Автори; 4 - Видавництво; 5 - Кількість сторінок; 6 - Наявність; 7 - Вийти " + reset);
                 switch (menuNumberCheck(scanner, 7)) {
                     case 1: // ID
-                        System.out.println("Ведіть нове ID");
+                        System.out.println("Введіть нове ID");
                         book.setId(bookIDCheck(scanner));
                         break;
                     case 2: // Назва
-                        System.out.println("Ведіть нову назву");
-                        // Перевіряти коретність введення назви книжки немає сенcу
+                        System.out.println("Введіть нову назву");
+                        // Перевіряти коректність введення назви книжки немає сенcу
                         book.setTitle(scanner.next());
                         break;
                     case 3: // Автори
-                        System.out.println("Ведіть нових авторів");
+                        System.out.println("Введіть нових авторів");
                         book.setAuthor(authorNameCheck(scanner));
                         break;
-                    case 4: // Видаництво
-                        System.out.println("Ведіть нове видаництво");
-                        // Перевіряти коретність введення назви книжки немає сенcу
+                    case 4: // Видавництво
+                        System.out.println("Введіть нове видавництво");
+                        // Перевіряти коректність введення назви книжки немає сенcу
                         book.setPublisher(scanner.next());
                         break;
                     case 5: // Кількість сторінок
-                        System.out.println("Ведіть кількість сторінок");
+                        System.out.println("Введіть кількість сторінок");
                         book.setPages(pagesCheck(scanner));
                         break;
                     case 6: // Наявність
-                        System.out.println("Ведіть наявність (true/false)");
+                        System.out.println("Введіть наявність (true/false)");
                         book.setAvailable(availableCheck(scanner));
                         break;
                     case 7: // Вийти
@@ -108,14 +108,14 @@ public class BookDataManipulation extends DataManipulation {
 
     public static void deleteBook(Scanner scanner, Library library) {
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
-        // Перевіряти коретність введення назви книжки немає сенcу
+        // Перевіряти коректність введення назви книжки немає сенcу
         String title = scanner.nextLine();
-        boolean isDeleted = false; // Флаг для виходу з ціклу для забобігання ConcurrentModificationException
+        boolean isDeleted = false; // Флаг для виходу з ціклу для запобігання ConcurrentModificationException
         boolean isFound = false;
         for (Book book : library.getBooks()) {
             if (book.getTitle().equals(title)) {
                 isFound = true;
-                System.out.println("Перевірте данні книжки для видалення.");
+                System.out.println("Перевірте дані книжки для видалення.");
                 System.out.println(book);
                 System.out.println(menuColor+" Yes - Видалити книжку; No - Не видаляти книжку "+ reset);
                 String choice = scanner.nextLine();
@@ -133,7 +133,7 @@ public class BookDataManipulation extends DataManipulation {
                         System.out.println("Помилка! Повторіть введення...");
                         break;
                 }
-                if (isDeleted) break; // Вихід з циклу після видаленя користувача
+                if (isDeleted) break; // Вихід з циклу після видалення користувача
             }
         }
         if (!isFound) System.out.println("Книжка не знайдена.");
@@ -141,7 +141,7 @@ public class BookDataManipulation extends DataManipulation {
 
     public static void viewDataBook(Scanner scanner, Library library) {
         System.out.println("Знайдемо книжку. Для цього введіть назву книжки.");
-        // Перевіряти коретність введення назви книжки немає сенcу
+        // Перевіряти коректність введення назви книжки немає сенcу
         String title = scanner.nextLine();
         Book bookFound = null;
         for (Book book : library.getBooks()) {
@@ -159,11 +159,11 @@ public class BookDataManipulation extends DataManipulation {
     }
 
     public static void listBooks(Scanner scanner, Library library) {
-        System.out.println(menuColor + " [ Список книг ]  1 - назві; 2 - авторів" + reset);
+        System.out.println(menuColor + " [ Список книг ]  1 - назви; 2 - авторів" + reset);
         List<Book> books = library.getBooks();
 
-        // Для сортування по автору оба по назві використаем стандарні метод sort
-        // Компаратор передаемо у вигляді лямда виразу
+        // Для сортування за автором або за назвою використаємо стандартний метод sort
+        // Компаратор передаємо у вигляді лямбда виразу
         StringBuilder list = new StringBuilder();
         switch (menuNumberCheck(scanner, 2)) {
             case 1:
@@ -172,7 +172,7 @@ public class BookDataManipulation extends DataManipulation {
                     if (list.length() > 0) list.append("\n");
                     list.append(book);
                 }
-                printList(list.toString(),"Список книг відсортуваний за назвою");
+                printList(list.toString(),"Список книг відсортований за назвою");
             break;
             case 2:
                 books.sort((b1, b2) -> b1.getAuthor().compareToIgnoreCase(b2.getAuthor()));
@@ -180,7 +180,7 @@ public class BookDataManipulation extends DataManipulation {
                     if (list.length() > 0) list.append("\n");
                     list.append(book);
                 }
-                printList(list.toString(),"Список книг відсортуваний за автором");
+                printList(list.toString(),"Список книг відсортований за автором");
             break;
         }
     }

@@ -5,18 +5,18 @@ import java.io.Serializable;
 public class User implements Serializable {
     //<editor-fold desc="Class fields">
 
-    // Ідентефікатор коритувача у Бібліотеці
-    // номер заліковиї книжки
+    // Ідентифікатор користувача у Бібліотеці
+    // номер залікової книжки
     private String recordNumber;
-    // Імя користувача
+    // Ім'я користувача
     private String firstName;
-    // Прізвище коистувача
+    // Прізвище користувача
     private String lastName;
     // Побатькові користувача
     private String surname;
     // Номер групи користувача
     private String group;
-    // електронна пошта для сповіщень
+    // Електронна пошта для сповіщень
     private String email;
     //</editor-fold>
 
